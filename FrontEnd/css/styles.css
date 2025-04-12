@@ -1,0 +1,45 @@
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    font-family: "Comic Sans MS"
+}
+
+body {
+    background-color: #fcf7ea;
+    height: 100vh;
+    width: 100vw;
+}
+
+#wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+#menu-content {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+#MMbuttons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+button{
+    height: 50px;
+    font-size: 30px;
+    border: 2px solid #89c1d9;
+    background-color: #f0ebdf;
+    border-radius: 10px;
+}
+
+button:hover {
+    background-color: #ffabab;
+    color: white;
+}
