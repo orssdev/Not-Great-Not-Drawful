@@ -1,0 +1,148 @@
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    font-family: "Comic Sans MS"
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: #f0ebdf;
+}
+
+#wrapper-drawing-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 90%;
+    width: 90%;
+    gap: 25px;
+}
+
+#prompt-container {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 10px;
+}
+
+#prompt {
+    height: 75px;
+    background-color: #fcf7ea;
+    border: 2px solid #ffabab;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+#color-selector {
+    width: 80%;
+}
+
+#color-select {
+    height: 30px;
+}
+
+#confirm-color {
+    width: 100px;
+}
+
+#clear-button {
+    width: 100px;
+} {
+    width: 100px;
+}
+
+#drawing {
+    display: flex;
+    gap: 50px;
+}
+
+#controls {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 350px;
+}
+
+#colors {
+    background-color: #fcf7ea;
+    height: 75%;
+    border: 2px solid #ffabab;
+    border-radius: 10px;
+}
+
+#brush-size {
+    background-color: #fcf7ea;
+    border: 2px solid #ffabab;
+    border-radius: 10px;
+    /* border-top: 2px solid #ffabab; */
+    height: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+
+.size {
+    border: 2px solid #89c1d9;
+    height: 50px;
+    width: 50px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.size:hover {
+    background-color: #ffabab;
+}
+
+#small-size {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: black;
+}
+
+#medium-size {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: black;
+}
+
+#large-size {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: black;
+}
+
+button {
+    height: 50px;
+    font-size: 20px;
+    border: 2px solid #89c1d9;
+    background-color: #fcf7ea;
+    border-radius: 10px;
+}
+
+button:hover {
+    background-color: #ffabab;
+    color: white;
+}
+
+canvas {
+    background-color: #fcf7ea;
+    border: 2px solid #89c1d9;
+    border-radius: 10px;
+}

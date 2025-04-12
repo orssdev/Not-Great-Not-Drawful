@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/drawing-section.css">
+    <title>Drawing Section</title>
+</head>
+<body>
+    <div id="wrapper-drawing-section">
+        <div id="prompt-container">
+            <div id="prompt">
+                <p></p>
+            </div>
+            <div id="color-selector">
+                <label for="color">Choose a color:</label>
+
+                <select id="color-select" name="cars" id="color">
+                    <option value="Blue">Blue</option>
+                    <option value="Red">Red</option>
+                    <option value="Yellow">Yellow</option>
+                    <option value="Green">Green</option>
+                </select>
+                <button id="confirm-color">Confirm</button>
+            </div>
+            <button id="clear-button">Clear</button>
+        </div>
+        <div id="drawing">
+            <div id="canvas-container">
+                <canvas height="700" width="1000"></canvas>
+            </div>
+            <div id="controls">
+                <div id="colors">
+                </div>
+                <div id="brush-size">
+                    <div class="size" id="small">
+                        <div id="small-size"></div>
+                    </div>
+                    <div class="size" id="medium">
+                        <div id="medium-size"></div>
+                    </div>
+                    <div class="size" id="large">
+                        <div id="large-size"></div>
+                    </div>
+                </div>
+                <button>Submit</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
