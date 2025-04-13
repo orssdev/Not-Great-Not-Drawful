@@ -77,6 +77,55 @@ function mainMenu()
     });
 }
 
+function hostVoting()
+{
+    const theme = document.getElementById('theme')
+    theme.href = './css/hostvoting.css';
+    const oldWrapper = document.getElementById("wrapper");
+    oldWrapper.remove();
+
+    const wrapper = document.createElement("div");
+    wrapper.id = "wrapper";
+
+    wrapper.innerHTML = `
+        <div id="header"> 
+            <H1>What is this???</H1>
+        </div>
+        <div id="content">
+            <div class="description-container">
+                <div class="description" id="description1"></div>
+                <div class="description" id="description2"></div>
+            </div>
+            <img id="image" src="../assets/img.png">
+            <div class="description-container">
+                <div class="description" id="description3"></div>
+                <div class="description" id="description4"></div>
+            </div>
+    `;
+
+    document.body.appendChild(wrapper);
+}
+
+function voting()
+{
+    const theme = document.getElementById('theme')
+    theme.href = './css/voting.css';
+    const oldWrapper = document.getElementById("wrapper");
+    oldWrapper.remove();
+
+    const wrapper = document.createElement("div");
+    wrapper.id = "wrapper";
+
+    wrapper.innerHTML = `
+        <H1>Choose!</H1>
+        <button id="option1"></button>
+        <button id="option2"></button>
+        <button id="option3"></button>
+    `;
+
+    document.body.appendChild(wrapper);
+}
+
 function describeSection(imageObject)
 {
     const theme = document.getElementById('theme')
