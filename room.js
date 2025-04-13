@@ -10,7 +10,6 @@ class Room {
     this.roomsState = [];
   }
 
-
   createRoom(){
     return new Promise((resolve) => {
       const newID = uuidv4();

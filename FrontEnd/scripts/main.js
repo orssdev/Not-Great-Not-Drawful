@@ -43,14 +43,6 @@ function mainMenu()
           hostSection(object.joinCode);
         });
 
-        socket.on("room-joined", (object) => {
-          const players = document.getElementById('players');
-          const player = document.createElement('div');
-          player.setAttribute('class', 'player');
-          player.innerHTML = `${object.userNames[object.userNames.length - 1]}`;
-          players.appendChild(player);
-        });
-
         console.log(socket.listeners("room-joined"));
     });
 
@@ -68,6 +60,10 @@ function mainMenu()
             socket.on("room-joined", (object) => {
               console.log(object);
               waiting();
+            });
+
+            socket.on("start-drawing", () => {
+              drawingSection();
             });
           }
         });
@@ -93,10 +89,18 @@ function hostWaiting()
                 <h2>Players</h2>
             </div>
             <div id="timer-container">
-                <h1>69:69</h1>
+                <h1 id="time-remaining">01:00</h1>
             </div>
         </div>
     `;
+    let time = 60;
+    const timer = document.getElementById('time-remaining');
+    //while (time >= 0) {
+    //  //timer.innerHTML = `00:${String(time).padStart(2, '0')}`;
+    //  setTimeout(() => {
+    //    time--;
+    //  }, 1000);
+    //};
     document.body.appendChild(wrapper);
 }
 
@@ -167,6 +171,24 @@ function hostSection(joinCode)
         </div>
     `;
     document.body.appendChild(wrapper);
+
+    socket.on("room-joined", (object) => {
+      const players = document.getElementById('players');
+      const player = document.createElement('div');
+      player.setAttribute('class', 'player');
+      player.innerHTML = `${object.userNames[object.userNames.length - 1]}`;
+      players.appendChild(player);
+    });
+
+    const startButton = document.getElementById('start');
+
+    startButton.addEventListener('click', () => {
+      socket.emit("start-game");
+    });
+
+  socket.on("start-drawing", () => {
+    hostWaiting();
+  });
 }
 
 function drawingSection()

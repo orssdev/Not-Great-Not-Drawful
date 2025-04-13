@@ -17,6 +17,25 @@ const io = new Server(server);
 
 const room = new Room();
 
+function getPrompts(numPrompts) {
+  const prompts = require("./prompts.json");
+
+  let final = [];
+
+  let numsUsed = [];
+  for (let i = 0; i < numPrompts; i++) {
+    let randNum = Math.floor(Math.random() * prompts.length);
+    if (numsUsed.includes(randNum)) {
+      i--;
+      continue;
+    }
+    numsUsed.push(randNum);
+    final.push(prompts[randNum]);
+  }
+
+  return final;
+}
+
 io.on("connection", async (socket) => {
   socket.on("create-room", async () => {
     roomObject = await room.createRoom();
@@ -36,8 +55,9 @@ io.on("connection", async (socket) => {
     socket.broadcast.emit("room-joined", roomObject);
   });
 
-  socket.on("send-message", (message) => {
-    socket.to(roomID).emit("receive-message", message);
+  socket.on("start-game", () => {
+    socket.emit("start-drawing");
+    socket.broadcast.emit("start-drawing");
   });
 
   socket.on("disconnect", () => {
