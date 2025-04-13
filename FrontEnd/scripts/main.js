@@ -85,6 +85,47 @@ function mainMenu()
     });
 }
 
+function winner()
+{
+    const theme = document.getElementById('theme')
+    theme.href = './css/winner.css';
+    const oldWrapper = document.getElementById("wrapper");
+    oldWrapper.remove();
+
+    const wrapper = document.createElement("div");
+    wrapper.id = "wrapper";
+
+    wrapper.innerHTML = `
+        <H1>Winner!</H1>
+        <div class="player" id="player"></div>
+    `;
+
+    document.body.appendChild(wrapper);
+}
+
+function leaderboard()
+{
+    const theme = document.getElementById('theme')
+    theme.href = './css/leaderboard.css';
+    const oldWrapper = document.getElementById("wrapper");
+    oldWrapper.remove();
+
+    const wrapper = document.createElement("div");
+    wrapper.id = "wrapper";
+
+    wrapper.innerHTML = `
+        <h1>Leaderboard</h1>
+        <div id="players">
+            <div class="player" id="player1"></div>
+            <div class="player" id="player2"></div>
+            <div class="player" id="player3"></div>
+            <div class="player" id="player4"></div>
+        </div>
+    `;
+
+    document.body.appendChild(wrapper);
+}
+
 function hostVoting(currentDrawings)
 {
     console.log("if you see this, you are in the host voting section");
