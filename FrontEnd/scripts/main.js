@@ -146,7 +146,7 @@ function hostSection(joinCode)
 {
     const theme = document.getElementById('theme')
     theme.href = './css/host.css';
-    const oldWrapper = document.getElementById("wrapper-menu");
+    const oldWrapper = document.getElementById("wrapper");
     oldWrapper.remove();
 
     const wrapper = document.createElement("div");
