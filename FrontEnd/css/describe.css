@@ -22,8 +22,11 @@ body {
     align-items: center;
     height: 100%;
     width: 100%;
-    background-color: #f0ebdf;
     gap: 25px;
+    background-image: url('../assets/background2.png');
+    background-size: cover; /* or contain */
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 h1 {

@@ -15,7 +15,6 @@ body {
     justify-content: center;
     height: 100vh;
     width: 100vw;
-    background-color: #f0ebdf;
 }
 
 #wrapper {
@@ -24,6 +23,10 @@ body {
     align-items: center;
     justify-content: center;
     gap: 25px;
+    background-image: url('../assets/background3.png');
+    background-size: cover; /* or contain */
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 button{

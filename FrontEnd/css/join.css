@@ -10,18 +10,6 @@ body {
     height: 100vh;
     width: 100vw;
 }
-* {
-    margin: 0;
-    padding: 0;
-    text-decoration: none;
-    font-family: "Comic Sans MS"
-}
-
-body {
-    background-color: #fcf7ea;
-    height: 100vh;
-    width: 100vw;
-}
 
 #wrapper {
     display: flex;
@@ -30,7 +18,10 @@ body {
     align-items: center;
     height: 100%;
     width: 100%;
-    background-color: #f0ebdf;
+    background-image: url('../assets/background2.png');
+    background-size: cover; /* or contain */
+    background-repeat: no-repeat;
+    background-position: center;
     gap: 25px;
 }
 

@@ -17,7 +17,10 @@ body {
     align-items: center;
     height: 100%;
     width: 100%;
-    background-color: #f0ebdf;
+    background-image: url('../assets/background1.png');
+    background-size: cover; /* or contain */
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 #menu-content {
