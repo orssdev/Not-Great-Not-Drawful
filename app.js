@@ -76,8 +76,8 @@ io.on("connection", async (socket) => {
     currentDrawings.push(imageObject);
     let roomObject = room.getRoomFromUsername(imageObject.user);
     if (currentDrawings.length == roomObject.users) {
-      socket.emit("describe-drawing");
-      socket.broadcast.emit("describe-drawing");
+      socket.emit("describe-drawing", imageObject);
+      socket.broadcast.emit("describe-drawing", imageObject);
     };
   });
 

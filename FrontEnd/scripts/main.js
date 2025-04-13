@@ -69,15 +69,15 @@ function mainMenu()
               drawingSection(prompt);
             });
 
-            socket.on("describe-drawing", (_) => {
-              describeSection();
+            socket.on("describe-drawing", (imageObject) => {
+              describeSection(imageObject);
             });
           }
         });
     });
 }
 
-function describeSection()
+function describeSection(imageObject)
 {
     const theme = document.getElementById('theme')
     theme.href = './css/describe.css';
@@ -95,8 +95,10 @@ function describeSection()
             <button id="submit-button">Submit</button>
         </div>
     `;
-
     document.body.appendChild(wrapper);
+
+    let image = document.getElementById('image');
+    image.src = imageObject.img;
 }
 
 
