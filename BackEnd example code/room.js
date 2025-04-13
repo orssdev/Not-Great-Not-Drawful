@@ -25,28 +25,6 @@ class Room {
     });
   }
 
-  joinRoom() {
-    return new Promise((resolve) => {
-      for (let i = 0; i < this.roomsState.length; i++) {
-        if (this.roomsState[i].users < ROOM_MAX_CAPACITY) {
-          this.roomsState[i].users++;
-          console.log(`room ID is ${this.roomsState[i].id}`);
-          console.log(this.roomsState[i]);
-          return resolve(this.roomsState[i].id);
-        }
-      }
-
-      const newID = uuidv4();
-      const joinCode = crypto.randomBytes(2).toString("hex");
-      this.roomsState.push({
-        id: newID,
-        users: 1,
-        joinCode: joinCode,
-      });
-      return resolve(newID);
-    });
-  }
-
   joinFromJoinCode(joinCode) {
     return new Promise((resolve) => {
     joinCode = joinCode.toLowerCase();

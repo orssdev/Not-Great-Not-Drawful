@@ -1,4 +1,4 @@
-
+const socket = io();
 const playButton = document.getElementById('play-button');
 const menuContent = document.getElementById('menu-content');
 
@@ -37,11 +37,14 @@ function mainMenu()
     const hostButton = document.getElementById('host-button');
 
     hostButton.addEventListener('click', () => {
-        hostSection();
+        socket.emit("create-room");
+        socket.on("room-created", (object) => {
+          hostSection(object.joinCode);
+        });
     });
 }
 
-function hostSection()
+function hostSection(joinCode)
 {
     const theme = document.getElementById('theme')
     theme.href = './css/host.css';
@@ -54,7 +57,7 @@ function hostSection()
     wrapper.innerHTML = `
         <div id="heading">
             <h1>Hosting...</h1>
-            <h2>Room Code: ....</h2>
+            <h2>Room Code: ${joinCode}</h2>
         </div>
         <div id="content">
             <div id="players">
