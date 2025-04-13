@@ -51,6 +51,22 @@ function mainMenu()
     });
 }
 
+function waiting()
+{
+    const theme = document.getElementById('theme')
+    theme.href = './css/waiting.css';
+    const oldWrapper = document.getElementById("wrapper");
+    oldWrapper.remove();
+
+    const wrapper = document.createElement("div");
+    wrapper.id = "wrapper";
+
+    wrapper.innerHTML = `
+        <h1>Waiting for other players...</h1>
+    `;
+    document.body.appendChild(wrapper);
+}
+
 function joinSection()
 {
     const theme = document.getElementById('theme')
