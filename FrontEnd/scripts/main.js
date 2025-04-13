@@ -70,7 +70,7 @@ function mainMenu()
     });
 }
 
-function hostWaiting()
+function hostWaiting(object)
 {
     const theme = document.getElementById('theme')
     theme.href = './css/hostwaiting.css';
@@ -93,15 +93,40 @@ function hostWaiting()
             </div>
         </div>
     `;
-    let time = 60;
-    const timer = document.getElementById('time-remaining');
-    //while (time >= 0) {
-    //  //timer.innerHTML = `00:${String(time).padStart(2, '0')}`;
-    //  setTimeout(() => {
-    //    time--;
-    //  }, 1000);
-    //};
+
     document.body.appendChild(wrapper);
+
+    const players = document.getElementById('players');
+    console.log(object.userNames);
+    for (let i = 0; i < object.userNames.length; i++) {
+        const player = document.createElement('div');
+        player.setAttribute('class', 'player');
+        player.innerHTML = `${object.userNames[i]}`;
+        players.appendChild(player);
+    }
+
+    let deadline = new Date();
+    deadline.setSeconds(deadline.getSeconds() + 60);
+    // huh?
+    // https://www.w3schools.com/howto/howto_js_countdown.asp
+    let x = setInterval(function() {
+    // Get today's date and time
+    let now = new Date().getTime();
+
+    // Find the distance between now and the count down date
+    let distance = deadline - now;
+
+    // Time calculations for days, hours, minutes and seconds
+    let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    // Display the result in the element with id="demo"
+    document.getElementById('time-remaining').innerHTML = `00:${String(seconds).padStart(2, '0')}`;
+
+    // If the count down is finished, write some text
+    if (distance < 0) {
+      clearInterval(x);
+      document.getElementById('time-remaining').innerHTML = "EXPIRED";
+    } }, 1000);
 }
 
 function waiting()
@@ -172,12 +197,15 @@ function hostSection(joinCode)
     `;
     document.body.appendChild(wrapper);
 
+    let gameObject = {};
+
     socket.on("room-joined", (object) => {
       const players = document.getElementById('players');
       const player = document.createElement('div');
       player.setAttribute('class', 'player');
       player.innerHTML = `${object.userNames[object.userNames.length - 1]}`;
       players.appendChild(player);
+      gameObject = object;
     });
 
     const startButton = document.getElementById('start');
@@ -187,7 +215,7 @@ function hostSection(joinCode)
     });
 
   socket.on("start-drawing", () => {
-    hostWaiting();
+    hostWaiting(gameObject);
   });
 }
 
