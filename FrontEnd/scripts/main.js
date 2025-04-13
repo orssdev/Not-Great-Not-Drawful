@@ -22,6 +22,7 @@ function mainMenu()
     hostBtn.textContent = 'Host';
 
     const joinBtn = document.createElement('button');
+    joinBtn.setAttribute('id', 'join-button')
     joinBtn.textContent = 'Join';
 
     // const dsBtn = document.createElement('button');
@@ -42,6 +43,38 @@ function mainMenu()
           hostSection(object.joinCode);
         });
     });
+
+    const joinButton = document.getElementById('join-button');
+
+    joinButton.addEventListener('click', () => {
+        joinSection();
+    });
+}
+
+function joinSection()
+{
+    const theme = document.getElementById('theme')
+    theme.href = './css/join.css';
+    const oldWrapper = document.getElementById("wrapper-menu");
+    oldWrapper.remove();
+
+    const wrapper = document.createElement("div");
+    wrapper.id = "wrapper";
+
+    wrapper.innerHTML = `
+        <div id="header">
+            <h1>Join a Game!</h1>
+        </div>
+        <div id="inputs">
+            <h3>Name:</h3>
+            <input type="text" id="player-name">
+
+            <h3>Code:</h3>
+            <input type="text" id="room-code">
+        </div>
+        <button>Join</button>
+    `;
+    document.body.appendChild(wrapper);
 }
 
 function hostSection(joinCode)

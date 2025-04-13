@@ -36,6 +36,12 @@ body {
     justify-content: center;
     align-items: center;
     gap: 25px;
+    font-size: 24px;
+}
+
+.player {
+    border: 2px solid #ffabab;
+    padding: 25px;
 }
 
 #content {
@@ -51,15 +57,19 @@ h1 {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+    height: 500px;
+    width: 500px;
 }
 
 button{
-    height: 50px;
-    font-size: 30px;
+    height: 150px;
+    font-size: 48px;
     border: 2px solid #89c1d9;
     background-color: #f0ebdf;
     border-radius: 10px;
-    width: 200px;
+    width: 400px;
+
 }
 
 button:hover {
