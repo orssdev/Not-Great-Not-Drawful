@@ -24,7 +24,9 @@ let currentDrawings = [];
 let currrentImageObject = null;
 let currentGuesses = [];
 let descriptionsQueue = [];
-
+let currentVotes = [];
+let votingQueue = [];
+let currentScore = {};
 function getPrompts(numPrompts) {
   let promptsFile = require("./prompts.json");
   let final = [];
@@ -90,6 +92,7 @@ io.on("connection", async (socket) => {
     let roomObject = room.getRoomFromUsername(guess.user);
     currentGuesses.push(guess);
     if (currentGuesses.length == roomObject.users - 1) {
+      votingQueue = currentDrawings.slice();
       for (let i = 0; i < currentDrawings.length; i++) {
         if (currentDrawings[i].user == imageObject.user) {
           currentDrawings[i].guesses = currentGuesses.slice();
@@ -109,6 +112,30 @@ io.on("connection", async (socket) => {
         }
         socket.emit("start-voting", currentDrawings);
         socket.broadcast.emit("start-voting", currentDrawings);
+      }
+    }
+  });
+
+  socket.on("submit-vote", (vote) => {
+    let roomObject = room.getRoomFromUsername(vote.user);
+    console.log(vote);
+    currentVotes.push(vote);
+    if (vote.trickster != "") {
+      currentScore[vote.trickster] = currentScore[vote.trickster] + 1;
+    } else {
+      currentScore[vote.user] = currentScore[vote.user] + 1;
+      currentScore[vote.artist] = currentScore[vote.artist] + 1;
+    }
+    if (currentVotes.length == roomObject.users - 1) {
+      votingQueue = votingQueue.filter((drawing) => drawing.user != vote.artist);
+      currentVotes = [];
+      if (votingQueue.length != 0) {
+        socket.emit("start-voting", votingQueue);
+        socket.broadcast.emit("start-voting", votingQueue);
+      } else {
+        // show leaderboard or whatever
+        socket.emit("show-leaderboard", currentScore);
+        socket.broadcast.emit("show-leaderboard", currentScore);
       }
     }
   });

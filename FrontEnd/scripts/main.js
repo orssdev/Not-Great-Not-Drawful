@@ -80,6 +80,15 @@ function mainMenu()
             socket.on("describe-drawing", (imageObject) => {
               describeSection(imageObject);
             });
+
+            socket.on("start-voting", (currentDrawings) => {
+              let votingQueue = currentDrawings.slice();
+              voting(votingQueue);
+            });
+
+            socket.on("show-leaderboard", (scores) => {
+              leaderboard(scores);
+            });
           }
         });
     });
@@ -103,8 +112,9 @@ function winner()
     document.body.appendChild(wrapper);
 }
 
-function leaderboard()
+function leaderboard(scores)
 {
+    console.log(scores);
     const theme = document.getElementById('theme')
     theme.href = './css/leaderboard.css';
     const oldWrapper = document.getElementById("wrapper");
@@ -163,8 +173,13 @@ function hostVoting(currentDrawings)
     image.src = drawing.img;
 }
 
-function voting()
+function voting(currentDrawings)
 {
+    const drawing = currentDrawings.pop();
+    let options = drawing.guesses.slice();
+    options.push({user: "", desc: drawing.correctDesc});
+    shuffleArray(options);
+    options = options.filter((option) => option.user != username);
     const theme = document.getElementById('theme')
     theme.href = './css/voting.css';
     const oldWrapper = document.getElementById("wrapper");
@@ -175,12 +190,34 @@ function voting()
 
     wrapper.innerHTML = `
         <H1>Choose!</H1>
-        <button id="option1"></button>
-        <button id="option2"></button>
-        <button id="option3"></button>
+        <button id="option1">${options.length >= 1 ? options[0].desc : ""}</button>
+        <button id="option2">${options.length >= 2 ? options[1].desc : ""}</button>
+        <button id="option3">${options.length >= 3 ? options[2].desc : ""}</button>
     `;
-
     document.body.appendChild(wrapper);
+
+    if (drawing.user == username){
+      waiting();
+    }
+
+    const option1 = document.getElementById('option1');
+    const option2 = document.getElementById('option2');
+    const option3 = document.getElementById('option3');
+
+    option1.addEventListener('click', () => {
+      waiting();
+      socket.emit("submit-vote", { user: username, artist: drawing.user, trickster: options[0].user});
+    });
+
+    option2.addEventListener('click', () => {
+      waiting();
+      socket.emit("submit-vote", { user: username, artist: drawing.user, trickster: options[1].user});
+    });
+
+    option3.addEventListener('click', () => {
+      waiting();
+      socket.emit("submit-vote", { user: username, artist: drawing.user, trickster: options[2].user});
+    });
 }
 
 function describeSection(imageObject)
@@ -377,6 +414,10 @@ function hostSection(joinCode)
   socket.on("start-voting", (currentDrawings) => {
     let votingQueue = currentDrawings.slice();
     hostVoting(votingQueue);
+  });
+
+  socket.on("show-leaderboard", (scores) => {
+    leaderboard(scores);
   });
 }
 
