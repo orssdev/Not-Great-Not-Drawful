@@ -96,7 +96,7 @@ function drawingSection()
     const inputs = document.getElementById('wrapper-drawing-section');
     const ctx = canvas.getContext('2d');
     const canvasRect = canvas.getBoundingClientRect();
-    let color = 'Blue'; 
+    let color = 'Blue';
 
     let confirmed = false;
     let isPainting = false;
@@ -149,7 +149,7 @@ function drawingSection()
         {
             ctx.strokeStyle = '#4040FF';
         }
-        
+
         if(e.target.id == 'yellow1')
         {
             ctx.strokeStyle = '#858476';
@@ -205,9 +205,11 @@ function drawingSection()
     });
 
     canvas.addEventListener('mousedown', (e) => {
+        const canvasRect = canvas.getBoundingClientRect();
         isPainting = true;
-        startx = e.clientX;
-        starty = e.clientY;
+        startx = e.clientX - canvasRect.left;
+        starty = e.clientY - canvasRect.top;
+        ctx.moveTo(startx, starty);
     });
 
     canvas.addEventListener('mouseup', (e) => {
@@ -217,15 +219,21 @@ function drawingSection()
     });
 
     const draw = e => {
-        if(!isPainting && !confirmed)
-        {
-            return ;
-        }
+        if(!isPainting) return;
+
         ctx.lineWidth = lineWidth;
         ctx.lineCap = 'round';
-        ctx.lineTo(e.clientX - canvasRect.left - 50, e.clientY - canvasRect.top) + 200;
+
+        const canvasRect = canvas.getBoundingClientRect();
+        const currentX = e.clientX - canvasRect.left;
+        const currentY = e.clientY - canvasRect.top;
+
+        ctx.lineTo(currentX, currentY);
         ctx.stroke();
-    } 
+
+        lastX = currentX;
+        lastY = currentY;
+    }
 
     canvas.addEventListener('mousemove', draw);
 }
