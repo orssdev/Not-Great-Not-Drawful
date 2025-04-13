@@ -19,3 +19,7 @@ body {
     width: 100%;
     background-color: #f0ebdf;
 }
+
+h1 {
+    font-size: 72px;
+}

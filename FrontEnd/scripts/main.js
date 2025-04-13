@@ -74,6 +74,32 @@ function mainMenu()
     });
 }
 
+function hostWaiting()
+{
+    const theme = document.getElementById('theme')
+    theme.href = './css/hostwaiting.css';
+    const oldWrapper = document.getElementById("wrapper");
+    oldWrapper.remove();
+
+    const wrapper = document.createElement("div");
+    wrapper.id = "wrapper";
+
+    wrapper.innerHTML = `
+        <div id="heading">
+            <h1>Waiting for players to finish...</h1>
+        </div>
+        <div id="content">
+            <div id="players">
+                <h2>Players</h2>
+            </div>
+            <div id="timer-container">
+                <h1>69:69</h1>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(wrapper);
+}
+
 function waiting()
 {
     const theme = document.getElementById('theme')
