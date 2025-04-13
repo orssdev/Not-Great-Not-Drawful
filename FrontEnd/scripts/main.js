@@ -120,7 +120,7 @@ function joinSection()
 {
     const theme = document.getElementById('theme')
     theme.href = './css/join.css';
-    const oldWrapper = document.getElementById("wrapper-menu");
+    const oldWrapper = document.getElementById("wrapper");
     oldWrapper.remove();
 
     const wrapper = document.createElement("div");
@@ -220,7 +220,7 @@ function drawingSection()
     document.body.appendChild(wrapper);
 
     const canvas = document.getElementById('drawing-canvas');
-    const inputs = document.getElementById('wrapper-drawing-section');
+    const inputs = document.getElementById('wrapper');
     const ctx = canvas.getContext('2d');
     ctx.strokeStyle = '#fcf7ea'; 
     let color = 'Blue';
