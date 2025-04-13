@@ -70,6 +70,29 @@ function mainMenu()
     });
 }
 
+function describeSection()
+{
+    const theme = document.getElementById('theme')
+    theme.href = './css/describe.css';
+    const oldWrapper = document.getElementById("wrapper");
+    oldWrapper.remove();
+
+    const wrapper = document.createElement("div");
+    wrapper.id = "wrapper";
+
+    wrapper.innerHTML = `
+        <h1>Describe this: </h1>
+        <img id="image" src="../assets/img.png">
+        <div id="input-container">
+            <input id="description" type="text">
+            <button id="submit-button">Submit</button>
+        </div>
+    `;
+
+    document.body.appendChild(wrapper);
+}
+
+
 function hostWaiting(object)
 {
     const theme = document.getElementById('theme')
