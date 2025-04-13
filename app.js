@@ -60,6 +60,7 @@ io.on("connection", async (socket) => {
   // }
   socket.on("join-room", async (object) => {
     roomObject = await room.joinFromJoinCode(object);
+    currentScore[object.playerName] = 0;
     socket.join(roomObject.id);
     socket.emit("room-joined", roomObject);
     socket.broadcast.emit("room-joined", roomObject);
