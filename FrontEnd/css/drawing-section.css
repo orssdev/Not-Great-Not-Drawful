@@ -57,7 +57,9 @@ body {
 
 #clear-button {
     width: 100px;
-} {
+} 
+
+#main-menu {
     width: 100px;
 }
 
@@ -78,6 +80,69 @@ body {
     height: 75%;
     border: 2px solid #ffabab;
     border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.color-button {
+    height: 50px;
+    width: 90%;
+    border-radius: 10px;
+}
+
+#red1 {
+    background-color: #857885;
+}
+#red2 {
+    background-color: #C25C63;
+}
+#red3 {
+    background-color: #E14E52;
+}
+#red4 {
+    background-color: #FF4040;
+}
+
+#green1 {
+    background-color: #858476;
+}
+#green2 {
+    background-color: #97C25B;
+}
+#green3 {
+    background-color: #A0E14E;
+}
+#green4 {
+    background-color: #A9FF40;
+}
+
+#yellow1 {
+    background-color: #858476;
+}
+#yellow2 {
+    background-color: #C2B35B;
+}
+#yellow3 {
+    background-color: #E1C94E;
+}
+#yellow4 {
+    background-color: #FFE240;
+}
+
+#blue1 {
+    background-color: #857885;
+}
+#blue2 {
+    background-color: #635CC2;  
+}
+#blue3 {
+    background-color: #524EE1;
+}
+#blue4 {
+    background-color: #4040FF;
 }
 
 #brush-size {
