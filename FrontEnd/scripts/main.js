@@ -42,12 +42,35 @@ function mainMenu()
         socket.on("room-created", (object) => {
           hostSection(object.joinCode);
         });
+
+        socket.on("room-joined", (object) => {
+          const players = document.getElementById('players');
+          const player = document.createElement('div');
+          player.setAttribute('class', 'player');
+          player.innerHTML = `${object.userNames[object.userNames.length - 1]}`;
+          players.appendChild(player);
+        });
+
+        console.log(socket.listeners("room-joined"));
     });
 
     const joinButton = document.getElementById('join-button');
 
     joinButton.addEventListener('click', () => {
         joinSection();
+        const joinBtn = document.getElementById("join-button");
+        joinBtn.addEventListener("click", () => {
+          const playerName = document.getElementById("player-name").value;
+          const joinCode = document.getElementById("join-code").value;
+
+          if (playerName != "" && joinCode != "") {
+            socket.emit("join-room", { playerName: playerName, joinCode: joinCode });
+            socket.on("room-joined", (object) => {
+              console.log(object);
+              waiting();
+            });
+          }
+        });
     });
 }
 
@@ -86,9 +109,9 @@ function joinSection()
             <input type="text" id="player-name">
 
             <h3>Code:</h3>
-            <input type="text" id="room-code">
+            <input type="text" id="join-code">
         </div>
-        <button>Join</button>
+        <button id="join-button">Join</button>
     `;
     document.body.appendChild(wrapper);
 }

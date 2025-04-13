@@ -17,7 +17,8 @@ class Room {
       const joinCode = crypto.randomBytes(2).toString("hex");
       this.roomsState.push({
         id: newID,
-        users: 1,
+        users: 0,
+        userNames: [],
         joinCode: joinCode,
       });
       console.log(this.roomsState);
@@ -25,37 +26,21 @@ class Room {
     });
   }
 
-  joinRoom() {
+  // object in format:
+  // {
+  //   username: str
+  //   joinCode: str
+  // }
+  joinFromJoinCode(object) {
     return new Promise((resolve) => {
-      for (let i = 0; i < this.roomsState.length; i++) {
-        if (this.roomsState[i].users < ROOM_MAX_CAPACITY) {
-          this.roomsState[i].users++;
-          console.log(`room ID is ${this.roomsState[i].id}`);
-          console.log(this.roomsState[i]);
-          return resolve(this.roomsState[i].id);
-        }
-      }
-
-      const newID = uuidv4();
-      const joinCode = crypto.randomBytes(2).toString("hex");
-      this.roomsState.push({
-        id: newID,
-        users: 1,
-        joinCode: joinCode,
-      });
-      return resolve({id: newID, joinCode: joinCode});
-    });
-  }
-
-  joinFromJoinCode(joinCode) {
-    return new Promise((resolve) => {
-    joinCode = joinCode.toLowerCase();
+    let joinCode = object.joinCode.toLowerCase();
       for (let i = 0; i < this.roomsState.length; i++) {
         if (this.roomsState[i].joinCode === joinCode) {
           console.log("JOIN CODE FOUND");
           this.roomsState[i].users++;
+          this.roomsState[i].userNames.push(object.playerName);
           console.log(this.roomsState[i]);
-          return resolve(this.roomsState[i].id);
+          return resolve(this.roomsState[i]);
         }
       }
     });

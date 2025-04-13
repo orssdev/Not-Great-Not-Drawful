@@ -24,10 +24,16 @@ io.on("connection", async (socket) => {
     socket.emit("room-created", roomObject);
   });
 
-  socket.on("join-room", async (data) => {
-    roomID = await room.joinFromJoinCode(data.message);
-    socket.join(roomID);
-    socket.emit("room-joined", roomID);
+  // object is in format
+  // {
+  //    playerName: "player1",
+  //    joinCode: "joinCode"
+  // }
+  socket.on("join-room", async (object) => {
+    roomObject = await room.joinFromJoinCode(object);
+    socket.join(roomObject.id);
+    socket.emit("room-joined", roomObject);
+    socket.broadcast.emit("room-joined", roomObject);
   });
 
   socket.on("send-message", (message) => {
