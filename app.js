@@ -4,6 +4,7 @@ const { Server } = require("socket.io");
 const express = require("express");
 const path = require("path");
 const Room = require("./room");
+const {connect} = require("http2");
 
 const app = express();
 
@@ -17,26 +18,28 @@ const io = new Server(server);
 
 const room = new Room();
 
-function getPrompts(numPrompts) {
-  const prompts = require("./prompts.json");
+const prompts = getPrompts(69);
 
+function getPrompts(numPrompts) {
+  let promptsFile = require("./prompts.json");
   let final = [];
 
   let numsUsed = [];
   for (let i = 0; i < numPrompts; i++) {
-    let randNum = Math.floor(Math.random() * prompts.length);
+    let randNum = Math.floor(Math.random() * promptsFile.length);
     if (numsUsed.includes(randNum)) {
       i--;
       continue;
     }
     numsUsed.push(randNum);
-    final.push(prompts[randNum]);
+    final.push(promptsFile[randNum]);
   }
 
   return final;
 }
 
 io.on("connection", async (socket) => {
+
   socket.on("create-room", async () => {
     roomObject = await room.createRoom();
     socket.join(roomObject.id);
@@ -56,8 +59,15 @@ io.on("connection", async (socket) => {
   });
 
   socket.on("start-game", () => {
-    socket.emit("start-drawing");
-    socket.broadcast.emit("start-drawing");
+    //let thisPrompt = prompts.pop();
+    //socket.emit("start-drawing", thisPrompt);
+    //socket.broadcast.emit("start-drawing", thisPrompt);
+    console.log(io.sockets.sockets);
+    io.sockets.sockets.forEach((socket) => {
+      let thisPrompt = getPrompts(1)[0];
+      socket.emit("start-drawing", thisPrompt);
+      //socket.broadcast.emit("start-drawing", thisPrompt);
+    });
   });
 
   socket.on("disconnect", () => {

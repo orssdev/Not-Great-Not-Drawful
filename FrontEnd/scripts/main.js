@@ -62,8 +62,8 @@ function mainMenu()
               waiting();
             });
 
-            socket.on("start-drawing", () => {
-              drawingSection();
+            socket.on("start-drawing", (prompt) => {
+              drawingSection(prompt);
             });
           }
         });
@@ -214,12 +214,12 @@ function hostSection(joinCode)
       socket.emit("start-game");
     });
 
-  socket.on("start-drawing", () => {
+  socket.on("start-drawing", (_) => {
     hostWaiting(gameObject);
   });
 }
 
-function drawingSection()
+function drawingSection(prompt)
 {
     const theme = document.getElementById('theme')
     theme.href = './css/drawing-section.css';
@@ -232,7 +232,7 @@ function drawingSection()
     wrapper.innerHTML = `
         <div id="prompt-container">
             <div id="prompt">
-                <p></p>
+                <p>${prompt}</p>
             </div>
             <div id="color-selector">
                 <label for="color">Choose a color:</label>
