@@ -128,6 +128,7 @@ function voting()
 
 function describeSection(imageObject)
 {
+    console.log(imageObject);
     const theme = document.getElementById('theme')
     theme.href = './css/describe.css';
     const oldWrapper = document.getElementById("wrapper");
@@ -146,8 +147,21 @@ function describeSection(imageObject)
     `;
     document.body.appendChild(wrapper);
 
+    if (imageObject.user === username) {
+      waiting();
+    }
+
     let image = document.getElementById('image');
     image.src = imageObject.img;
+
+    const submitButton = document.getElementById('submit-button');
+    submitButton.addEventListener('click', () => {
+      socket.emit("submit-description", imageObject, {
+        user: username,
+        descrtion: document.getElementById('description').value
+      });
+      waiting();
+    });
 }
 
 

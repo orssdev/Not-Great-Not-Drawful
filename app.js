@@ -21,6 +21,9 @@ const room = new Room();
 const prompts = getPrompts(69);
 
 let currentDrawings = [];
+let currrentImageObject = null;
+let currentGuesses = [];
+let descriptionsQueue = [];
 
 function getPrompts(numPrompts) {
   let promptsFile = require("./prompts.json");
@@ -72,13 +75,33 @@ io.on("connection", async (socket) => {
     });
   });
 
+
   socket.on("submit-drawing", (imageObject) => {
     currentDrawings.push(imageObject);
     let roomObject = room.getRoomFromUsername(imageObject.user);
     if (currentDrawings.length == roomObject.users) {
+      descriptionsQueue = currentDrawings.slice();
       socket.emit("describe-drawing", imageObject);
       socket.broadcast.emit("describe-drawing", imageObject);
     };
+  });
+
+  socket.on("submit-description", (imageObject, guess) => {
+    let roomObject = room.getRoomFromUsername(guess.user);
+    currentGuesses.push(guess);
+    if (currentGuesses.length == roomObject.users - 1) {
+      for (let i = 0; i < currentDrawings.length; i++) {
+        if (currentDrawings[i].user == imageObject.user) {
+          currentDrawings[i].guesses = currentGuesses.slice();
+          currentGuesses = [];
+        }
+      }
+      descriptionsQueue = descriptionsQueue.filter((drawing) => drawing.user != imageObject.user);
+      if (descriptionsQueue.length != 0) {
+        socket.emit("describe-drawing", descriptionsQueue[0]);
+        socket.broadcast.emit("describe-drawing", descriptionsQueue[0]);
+      }
+    }
   });
 
   socket.on("disconnect", () => {
