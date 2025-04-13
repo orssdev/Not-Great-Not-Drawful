@@ -14,7 +14,7 @@ body {
     background-color: #f0ebdf;
 }
 
-#wrapper-drawing-section {
+#wrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;

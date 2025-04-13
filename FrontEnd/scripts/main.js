@@ -173,11 +173,11 @@ function drawingSection()
 {
     const theme = document.getElementById('theme')
     theme.href = './css/drawing-section.css';
-    const oldWrapper = document.getElementById("wrapper-menu");
+    const oldWrapper = document.getElementById("wrapper");
     oldWrapper.remove();
 
     const wrapper = document.createElement("div");
-    wrapper.id = "wrapper-drawing-section";
+    wrapper.id = "wrapper";
 
     wrapper.innerHTML = `
         <div id="prompt-container">

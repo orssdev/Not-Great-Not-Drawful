@@ -11,7 +11,7 @@ body {
     width: 100vw;
 }
 
-#wrapper-menu {
+#wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
