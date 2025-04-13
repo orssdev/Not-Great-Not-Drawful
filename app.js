@@ -100,6 +100,15 @@ io.on("connection", async (socket) => {
       if (descriptionsQueue.length != 0) {
         socket.emit("describe-drawing", descriptionsQueue[0]);
         socket.broadcast.emit("describe-drawing", descriptionsQueue[0]);
+      } else {
+        for (let i = 0; i < currentDrawings.length; i++) {
+          //console.log(currentDrawings[i]);
+          for (let j = 0; j < currentDrawings[i].guesses.length; j++) {
+            console.log(currentDrawings[i].guesses[j]);
+          }
+        }
+        socket.emit("start-voting", currentDrawings);
+        socket.broadcast.emit("start-voting", currentDrawings);
       }
     }
   });

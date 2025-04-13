@@ -11,6 +11,14 @@ playButton.addEventListener('click', () => {
     mainMenu();
 });
 
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
 function mainMenu()
 {
     const mmButtons = document.createElement('div');
@@ -77,8 +85,13 @@ function mainMenu()
     });
 }
 
-function hostVoting()
+function hostVoting(currentDrawings)
 {
+    console.log("if you see this, you are in the host voting section");
+    const drawing = currentDrawings.pop();
+    let options = drawing.guesses.slice();
+    options.push({user: "", desc: drawing.correctDesc});
+    shuffleArray(options);
     const theme = document.getElementById('theme')
     theme.href = './css/hostvoting.css';
     const oldWrapper = document.getElementById("wrapper");
@@ -88,22 +101,25 @@ function hostVoting()
     wrapper.id = "wrapper";
 
     wrapper.innerHTML = `
-        <div id="header"> 
+        <div id="header">
             <H1>What is this???</H1>
         </div>
         <div id="content">
             <div class="description-container">
-                <div class="description" id="description1"></div>
-                <div class="description" id="description2"></div>
+                <div class="description" id="description1">${options.length >= 1 ? options[0].desc : ""}</div>
+                <div class="description" id="description2">${options.length >= 2 ? options[1].desc : ""}</div>
             </div>
             <img id="image" src="../assets/img.png">
             <div class="description-container">
-                <div class="description" id="description3"></div>
-                <div class="description" id="description4"></div>
+                <div class="description" id="description3">${options.length >= 3 ? options[2].desc : ""}</div>
+                <div class="description" id="description4">${options.length >= 4 ? options[3].desc : ""}</div>
             </div>
     `;
 
     document.body.appendChild(wrapper);
+
+    const image = document.getElementById('image');
+    image.src = drawing.img;
 }
 
 function voting()
@@ -158,7 +174,7 @@ function describeSection(imageObject)
     submitButton.addEventListener('click', () => {
       socket.emit("submit-description", imageObject, {
         user: username,
-        descrtion: document.getElementById('description').value
+        desc: document.getElementById('description').value
       });
       waiting();
     });
@@ -315,6 +331,11 @@ function hostSection(joinCode)
 
   socket.on("describe-drawing", (_) => {
     hostWaiting(gameObject);
+  });
+
+  socket.on("start-voting", (currentDrawings) => {
+    let votingQueue = currentDrawings.slice();
+    hostVoting(votingQueue);
   });
 }
 
