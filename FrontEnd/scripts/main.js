@@ -18,6 +18,7 @@ function mainMenu()
     rulesBtn.textContent = 'Rules';
 
     const hostBtn = document.createElement('button');
+    hostBtn.setAttribute('id', 'host-button')
     hostBtn.textContent = 'Host';
 
     const joinBtn = document.createElement('button');
@@ -33,11 +34,38 @@ function mainMenu()
     // mmButtons.appendChild(dsBtn);
 
     menuContent.appendChild(mmButtons);
-    // const drawingButton = document.getElementById('drawing-button');
+    const hostButton = document.getElementById('host-button');
 
-    // drawingButton.addEventListener('click', () => {
-    //     drawingSection();
-    // });
+    hostButton.addEventListener('click', () => {
+        hostSection();
+    });
+}
+
+function hostSection()
+{
+    const theme = document.getElementById('theme')
+    theme.href = './css/host.css';
+    const oldWrapper = document.getElementById("wrapper-menu");
+    oldWrapper.remove();
+
+    const wrapper = document.createElement("div");
+    wrapper.id = "wrapper";
+
+    wrapper.innerHTML = `
+        <div id="heading">
+            <h1>Hosting...</h1>
+            <h2>Room Code: ....</h2>
+        </div>
+        <div id="content">
+            <div id="players">
+                <h2>Players</h2>
+            </div>
+            <div id="start-container">
+                <button id="start">Start</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(wrapper);
 }
 
 function drawingSection()
