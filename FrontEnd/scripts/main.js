@@ -1,7 +1,6 @@
 
 const playButton = document.getElementById('play-button');
 const menuContent = document.getElementById('menu-content');
-let drawingButton = null;
 
 playButton.addEventListener('click', () => {
     playButton.remove();
@@ -12,7 +11,6 @@ playButton.addEventListener('click', () => {
 
 function mainMenu()
 {
-
     const mmButtons = document.createElement('div');
     mmButtons.setAttribute('id', 'MMbuttons')
 
@@ -25,21 +23,21 @@ function mainMenu()
     const joinBtn = document.createElement('button');
     joinBtn.textContent = 'Join';
 
-    const dsBtn = document.createElement('button');
-    dsBtn.setAttribute('id', 'drawing-button')
-    dsBtn.textContent = 'Drawing';
+    // const dsBtn = document.createElement('button');
+    // dsBtn.setAttribute('id', 'drawing-button')
+    // dsBtn.textContent = 'Drawing';
 
     mmButtons.appendChild(rulesBtn);
     mmButtons.appendChild(hostBtn);
     mmButtons.appendChild(joinBtn);
-    mmButtons.appendChild(dsBtn);
+    // mmButtons.appendChild(dsBtn);
 
     menuContent.appendChild(mmButtons);
-    drawingButton = document.getElementById('drawing-button');
+    // const drawingButton = document.getElementById('drawing-button');
 
-    drawingButton.addEventListener('click', () => {
-        drawingSection();
-    });
+    // drawingButton.addEventListener('click', () => {
+    //     drawingSection();
+    // });
 }
 
 function drawingSection()
@@ -95,7 +93,7 @@ function drawingSection()
     const canvas = document.getElementById('drawing-canvas');
     const inputs = document.getElementById('wrapper-drawing-section');
     const ctx = canvas.getContext('2d');
-    const canvasRect = canvas.getBoundingClientRect();
+    ctx.strokeStyle = '#fcf7ea'; 
     let color = 'Blue';
 
     let confirmed = false;
@@ -111,6 +109,22 @@ function drawingSection()
             const confirm = document.getElementById('color-selector');
             confirm.remove();
             genColors(color);
+            if(color == 'red')
+            {
+                ctx.strokeStyle = '#FF4040';
+            }
+            if(color == 'yellow')
+            {
+                ctx.strokeStyle = '#FFE240';
+            }
+            if(color.toLowerCase() == 'blue')
+            {
+                ctx.strokeStyle = '#4040FF';
+            }
+            if(color == 'green')
+            {
+                ctx.strokeStyle = '#A9FF40';
+            }
         }
         if(e.target.id == 'clear-button')
         {
@@ -183,6 +197,21 @@ function drawingSection()
         {
             ctx.strokeStyle = '#A9FF40';
         }
+
+        if(e.target.id == 'small')
+        {
+            lineWidth = 5;
+        }
+
+        if(e.target.id == 'medium')
+        {
+            lineWidth = 10;
+        }
+
+        if(e.target.id == 'large')
+        {
+            lineWidth = 30;
+        }
     });
 
     inputs.addEventListener('change', e => {
@@ -219,7 +248,7 @@ function drawingSection()
     });
 
     const draw = e => {
-        if(!isPainting) return;
+        if(!isPainting || confirmed) return;
 
         ctx.lineWidth = lineWidth;
         ctx.lineCap = 'round';
