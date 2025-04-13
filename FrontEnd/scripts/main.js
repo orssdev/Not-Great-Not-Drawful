@@ -263,7 +263,7 @@ function drawingSection(prompt)
                         <div id="large-size"></div>
                     </div>
                 </div>
-                <button>Submit</button>
+                <button id="submit-button">Submit</button>
             </div>
         </div>
     `;
@@ -444,6 +444,10 @@ function drawingSection(prompt)
     }
 
     canvas.addEventListener('mousemove', draw);
+    document.getElementById('submit-button').addEventListener('click', () => {
+        const imageData = canvas.toDataURL('image/png');
+        console.log(imageData);
+    });
 }
 
 function genColors(color)
