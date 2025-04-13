@@ -2,6 +2,8 @@ const socket = io();
 const playButton = document.getElementById('play-button');
 const menuContent = document.getElementById('menu-content');
 
+let username = "";
+
 playButton.addEventListener('click', () => {
     playButton.remove();
     const music = document.getElementById('main-music');
@@ -56,6 +58,7 @@ function mainMenu()
           const joinCode = document.getElementById("join-code").value;
 
           if (playerName != "" && joinCode != "") {
+            username = playerName;
             socket.emit("join-room", { playerName: playerName, joinCode: joinCode });
             socket.on("room-joined", (object) => {
               console.log(object);
@@ -64,6 +67,10 @@ function mainMenu()
 
             socket.on("start-drawing", (prompt) => {
               drawingSection(prompt);
+            });
+
+            socket.on("describe-drawing", (_) => {
+              describeSection();
             });
           }
         });
@@ -196,6 +203,8 @@ function joinSection()
 
 function hostSection(joinCode)
 {
+    let gameObject = {};
+
     const theme = document.getElementById('theme')
     theme.href = './css/host.css';
     const oldWrapper = document.getElementById("wrapper");
@@ -220,8 +229,6 @@ function hostSection(joinCode)
     `;
     document.body.appendChild(wrapper);
 
-    let gameObject = {};
-
     socket.on("room-joined", (object) => {
       const players = document.getElementById('players');
       const player = document.createElement('div');
@@ -238,6 +245,10 @@ function hostSection(joinCode)
     });
 
   socket.on("start-drawing", (_) => {
+    hostWaiting(gameObject);
+  });
+
+  socket.on("describe-drawing", (_) => {
     hostWaiting(gameObject);
   });
 }
@@ -295,7 +306,7 @@ function drawingSection(prompt)
     const canvas = document.getElementById('drawing-canvas');
     const inputs = document.getElementById('wrapper');
     const ctx = canvas.getContext('2d');
-    ctx.strokeStyle = '#fcf7ea'; 
+    ctx.strokeStyle = '#fcf7ea';
     let color = 'Blue';
 
     let confirmed = false;
@@ -469,6 +480,14 @@ function drawingSection(prompt)
     canvas.addEventListener('mousemove', draw);
     document.getElementById('submit-button').addEventListener('click', () => {
         const imageData = canvas.toDataURL('image/png');
+        const imageObject = {
+          user: username,
+          guesses: [],
+          img: imageData,
+          correctDesc: prompt,
+        };
+        socket.emit("submit-drawing", imageObject);
+        waiting();
         console.log(imageData);
     });
 }

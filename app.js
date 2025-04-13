@@ -20,6 +20,8 @@ const room = new Room();
 
 const prompts = getPrompts(69);
 
+let currentDrawings = [];
+
 function getPrompts(numPrompts) {
   let promptsFile = require("./prompts.json");
   let final = [];
@@ -68,6 +70,15 @@ io.on("connection", async (socket) => {
       socket.emit("start-drawing", thisPrompt);
       //socket.broadcast.emit("start-drawing", thisPrompt);
     });
+  });
+
+  socket.on("submit-drawing", (imageObject) => {
+    currentDrawings.push(imageObject);
+    let roomObject = room.getRoomFromUsername(imageObject.user);
+    if (currentDrawings.length == roomObject.users) {
+      socket.emit("describe-drawing");
+      socket.broadcast.emit("describe-drawing");
+    };
   });
 
   socket.on("disconnect", () => {

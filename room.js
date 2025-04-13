@@ -25,6 +25,22 @@ class Room {
     });
   }
 
+  getRoomFromJoinCode(joinCode) {
+    for (let i = 0; i < this.roomsState.length; i++) {
+      if (this.roomsState[i].joinCode === joinCode) {
+        return this.roomsState[i];
+      }
+    }
+  }
+
+  getRoomFromUsername(username) {
+    for (let i = 0; i < this.roomsState.length; i++) {
+      if (this.roomsState[i].userNames.includes(username)) {
+        return this.roomsState[i];
+      }
+    }
+  }
+
   // object in format:
   // {
   //   username: str
