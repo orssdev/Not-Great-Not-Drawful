@@ -115,6 +115,8 @@ function winner()
 function leaderboard(scores)
 {
     console.log(scores);
+    const keys = Object.keys(scores);
+    const values = Object.values(scores);
     const theme = document.getElementById('theme')
     theme.href = './css/leaderboard.css';
     const oldWrapper = document.getElementById("wrapper");
@@ -126,14 +128,19 @@ function leaderboard(scores)
     wrapper.innerHTML = `
         <h1>Leaderboard</h1>
         <div id="players">
-            <div class="player" id="player1"></div>
-            <div class="player" id="player2"></div>
-            <div class="player" id="player3"></div>
-            <div class="player" id="player4"></div>
         </div>
     `;
 
     document.body.appendChild(wrapper);
+
+    const players = document.getElementById('players')
+    for(let i = 0; i < keys.length; i++)
+    {
+        const player = document.createElement('div');
+        player.setAttribute('class', 'player');
+        player.innerHTML = `${keys[i]}: ${values[i]}`
+        players.appendChild(player);
+    }
 }
 
 function hostVoting(currentDrawings)
